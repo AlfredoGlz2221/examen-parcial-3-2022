@@ -6,12 +6,14 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import java.math.BigDecimal;
 import java.util.List;
 
+import edu.uaslp.objetos.shoppingcart.exception.EmptyShoppingCartException;
+import edu.uaslp.objetos.shoppingcart.exception.InvalidDataException;
 import org.junit.jupiter.api.Test;
 
 public class ShoppingCartTest {
 
     @Test
-    public void givenANewShoppingCart_whenIsEmpty_thenTrueIsReturned() {
+    public void givenANewShoppingCart_whenIsEmpty_thenTrueIsReturned() throws EmptyShoppingCartException {
         // Given:
         ShoppingCart shoppingCart = new ShoppingCart();
 
@@ -64,7 +66,7 @@ public class ShoppingCartTest {
 
 
     @Test
-    public void givenAShoppingCart_whenAddItemWithNullCode_thenExceptionIsThrown() {
+    public void givenAShoppingCart_whenAddItemWithNullCode_thenExceptionIsThrown() throws InvalidDataException {
         // Given:
         ShoppingCart shoppingCart = new ShoppingCart();
         String itemCode1 = null;
