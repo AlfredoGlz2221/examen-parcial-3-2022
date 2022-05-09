@@ -8,6 +8,7 @@ import java.util.List;
 
 import edu.uaslp.objetos.shoppingcart.exception.EmptyShoppingCartException;
 import edu.uaslp.objetos.shoppingcart.exception.InvalidDataException;
+import edu.uaslp.objetos.shoppingcart.exception.ItemNotFoundException;
 import org.junit.jupiter.api.Test;
 
 public class ShoppingCartTest {
@@ -79,7 +80,7 @@ public class ShoppingCartTest {
 
         assertThat(shoppingCart.isEmpty()).isTrue();
     }
-
+//////////////////////////////
     @Test
     public void givenAShoppingCart_whenAddItemWithProviderAsEmptyString_thenExceptionIsThrown() {
         // Given:
@@ -124,7 +125,7 @@ public class ShoppingCartTest {
 
         assertThat(shoppingCart.isEmpty()).isTrue();
     }
-
+//////////////////////////////////////////////////////
     @Test
     public void givenAShoppingCartWithItems_whenAddItem_thenItemIsAdded() {
         // Given:
@@ -157,7 +158,7 @@ public class ShoppingCartTest {
         assertThat(items.get(1).getQuantity()).isEqualTo(3);
         assertThat(items.get(1).getUnitCost()).isEqualByComparingTo(new BigDecimal("46.2"));
     }
-
+////////////////////////////////////7
     @Test
     public void givenAShoppingCartWithItems_whenAddAnExistentItem_thenQuantityIsIncreased() {
         // Given:
@@ -191,7 +192,7 @@ public class ShoppingCartTest {
         assertThat(items.get(1).getQuantity()).isEqualTo(3);
         assertThat(items.get(1).getUnitCost()).isEqualByComparingTo(new BigDecimal("46.2"));
     }
-
+///////////////////////////////////////////////////
     @Test
     public void givenAShoppingCartWithItems_whenAddAnExistentItemWithDifferentCost_thenItemIsAdded() {
         // Given:
@@ -231,7 +232,7 @@ public class ShoppingCartTest {
         assertThat(items.get(2).getQuantity()).isEqualTo(1);
         assertThat(items.get(2).getUnitCost()).isEqualByComparingTo(new BigDecimal("44.5"));
     }
-
+////////////////////////////////////////////////////////////////////////////////
     @Test
     public void givenAShoppingCartWithItems_whenRemoveItem_thenItemIsRemoved() throws ItemNotFoundException {
         // Given:

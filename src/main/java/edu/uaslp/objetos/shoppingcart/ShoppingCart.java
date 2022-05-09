@@ -1,62 +1,106 @@
 package edu.uaslp.objetos.shoppingcart;
 
+import edu.uaslp.objetos.shoppingcart.exception.EmptyShoppingCartException;
+import edu.uaslp.objetos.shoppingcart.exception.InvalidDataException;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.OptionalDouble;
+
 
 public class ShoppingCart
 {
-    List<ShoppingCart> shoppingCarts;
+    private List<Item> items = new ArrayList<>();
 
-   public ShoppingCart()
+
+   public boolean isEmpty()
    {
-       shoppingCarts = new ArrayList<>();
+       return items.isEmpty();
    }
 
+   public void addItem(Item item)
+   {
+        if(item.getCode() == null)
+        {
+            throw new InvalidDataException("Null or empty string not allowed for item code");
 
-    public boolean isEmpty()
-    {
-        List<Item> items = new ArrayList<>();
-        for(Item items : shoppingCarts) {
-            if (getItems().isEmpty()) {
-                return true;
+        }
+
+        if (item.getProviderCode().isEmpty()) {
+            throw new InvalidDataException("Null or empty string not allowed for provider code");
+        }
+
+
+        if(item.getUnitCost().compareTo(BigDecimal.ZERO) < 0)
+        {
+            throw new InvalidDataException("Cost must be greater than zero");
+        }
+
+        if(item.getQuantity() < 1 || item.getQuantity() > 5)
+        {
+            throw new InvalidDataException("Quantity must be greater than zero and lower than 5");
+
+        }
+
+        for(Item existentItem : items)
+        {
+            if(existentItem.getCode().equals(item.getCode()) && existentItem.getUnitCost().compareTo(item.getUnitCost()) == 0)
+            {
+                existentItem.setQuantity(existentItem.getQuantity() + item.getQuantity() );
+                return;
             }
         }
-        return false;
-    }
-
-    public OptionalDouble getTotalCost()
-    {
-        int costT=0;
-        for(ShoppingCart shoppingCart : shoppingCarts)
-        {
-            shoppingCart
-        }
-
-    }
-
-    public void addItem(Item item)
-    {
-        this.
-    }
+       items.add(item);
+   }
 
     public int getItemsCount()
     {
-        return shoppingCarts.size();
+        int count = 0;
+        for(Item item : items)
+        {
+            count += item.getQuantity();
+        }
+        return count;
     }
 
     public List<Item> getItems()
     {
-        List<Item> items = new ArrayList<>();
-
-        for(Item items : shoppingCarts)
-        {
-            items.getCode();
-        }
-
         return items;
     }
 
-    public void removeItem(String itemCode2) {
+    public void removeItem(String itemCode)
+    {
+        for(Item item : items)
+        {
+            if(item.getCode().equals(itemCode))
+            {
+                item.setQuantity(item.getQuantity() - 1);
+
+                if(item.getQuantity() == 0)
+                {
+                    items.remove(item);
+
+                }
+                return;
+            }
+        }
+    }
+
+    public BigDecimal getTotalCost()
+    {
+        if(items.isEmpty())
+        {
+            throw new EmptyShoppingCartException();
+        }
+
+        BigDecimal totalCost = BigDecimal.ZERO;
+
+        for(Item item : items)
+        {
+            totalCost = totalCost.add(item.getUnitCost().multiply(BigDecimal.valueOf((item.getQuantity()))));
+        }
+
+
+       return totalCost;
     }
 }
